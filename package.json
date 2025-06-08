@@ -1,0 +1,15 @@
+{
+  "private": true,
+  "version": "0.1.0",
+  "name": "incode-kanban",
+  "scripts": {
+    "install:api": "cd ./rest-api && npm install",
+    "install:web": "cd ./web-client && npm install",
+    "start:api": "cd ./rest-api && npm run start",
+    "start:web": "cd ./web-client && npm run start",
+    "dev": "npm run install:api && npm run install:web && concurrently \"npm run start:api\" \"npm run start:web\""
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.2"
+  }
+}
