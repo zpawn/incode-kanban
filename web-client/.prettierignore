@@ -1,0 +1,64 @@
+# Dependencies
+node_modules
+.pnp
+.pnp.js
+.pnp.cjs
+
+# Build output
+/dist
+/build
+
+# Cache
+.eslintcache
+
+# Environment variables
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Editor directories and files
+.idea
+.vscode/*
+!.vscode/extensions.json
+.idea
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# TypeScript cache
+*.tsbuildinfo
+
+# Vite cache
+.vite/
+
+# Misc
+.DS_Store
+*.pem
+
+# Testing
+/coverage
+
+# Production
+/build
+
+# Local development
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Debug logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
