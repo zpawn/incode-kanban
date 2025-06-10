@@ -1,6 +1,7 @@
 import { type HTMLAttributes } from 'react';
 import { cva, type VariantProps } from 'class-variance-authority';
 import { clsx } from 'clsx';
+import { type Card as CardType }  from '@/features/cards';
 import { IconButton } from '../button';
 import { H4, P } from '../typography';
 
@@ -12,24 +13,23 @@ const cardVariants = cva('border border-primary padding-small margin-bottom-smal
 export interface CardProps
   extends HTMLAttributes<HTMLDivElement>,
     VariantProps<typeof cardVariants> {
-  title?: string;
-  description?: string;
+  card: CardType;
   onEdit?: () => void;
   onDelete?: () => void;
 }
 
-const Card = ({ className, title, description, onEdit, onDelete }: CardProps) => {
+const Card = ({ className, card, onEdit, onDelete }: CardProps) => {
   const isShowActions = Boolean(onEdit || onDelete);
 
   return (
     <section className={clsx(cardVariants({ className }))} style={{ backgroundColor: 'white' }}>
-      {title && (
+      {card.title && (
         <header>
-          <H4 className="margin-none">{title}</H4>
+          <H4 className="margin-none">{card.title}</H4>
         </header>
       )}
 
-      {description && <P>{description}</P>}
+      {card.description && <P>{card.description}</P>}
 
       {isShowActions && (
         <footer className="row flex-right">

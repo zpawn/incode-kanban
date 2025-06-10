@@ -1,7 +1,12 @@
-import { Kanban } from '@/components/kanban';
+import { Kanban, Notification } from '@/components';
 
 const App = () => {
-  return <Kanban />;
+  return (
+    <>
+      <Kanban />
+      <Notification />
+    </>
+  );
 };
 
 export { App };
