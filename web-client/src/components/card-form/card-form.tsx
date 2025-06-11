@@ -1,11 +1,17 @@
 import { useActionState } from 'react';
-import { FormField, Textarea, Button } from '@/ui';
-import { type CardDto } from '@/features/cards/types';
+import { FormField, Textarea, Button, Select } from '@/ui';
+import { type CardDto, type CardStatus } from '@/features/cards/types';
 
 type CardFormProps = {
   card?: Partial<Pick<CardDto, 'title' | 'description' | 'status'>>;
   onSubmit: (data: Omit<CardDto, 'board'>) => void;
 };
+
+const STATUS_OPTIONS: { value: CardStatus; label: string }[] = [
+  { value: 'todo', label: 'To Do' },
+  { value: 'in-progress', label: 'In Progress' },
+  { value: 'done', label: 'Done' },
+];
 
 const CardForm = ({ card, onSubmit }: CardFormProps) => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -13,7 +19,7 @@ const CardForm = ({ card, onSubmit }: CardFormProps) => {
     return onSubmit({
       title: formData.get('title') as string,
       description: formData.get('description') as string,
-      status: 'todo',
+      status: formData.get('status') as CardStatus,
     });
   }, {});
 
@@ -33,6 +39,14 @@ const CardForm = ({ card, onSubmit }: CardFormProps) => {
           name="description"
           placeholder="Enter a description here"
           defaultValue={card?.description || ''}
+        />
+      </FormField>
+
+      <FormField label="Status">
+        <Select
+          name="status"
+          options={STATUS_OPTIONS}
+          defaultValue={card?.status || 'todo'}
         />
       </FormField>
 

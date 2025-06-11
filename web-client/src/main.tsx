@@ -5,7 +5,6 @@ import { store } from '@/store';
 import { App } from '@/app.tsx';
 import 'papercss/dist/paper.min.css';
 
-// "6845684357e280ae59ddcba4"
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <Provider store={store}>

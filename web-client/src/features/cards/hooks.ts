@@ -58,14 +58,7 @@ export const useCards = () => {
           return;
         }
 
-        const updatedData = {
-          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-          // @ts-ignore
-          status: cards.entities[id]?.status,
-          ...data,
-          board: currentBoard._id,
-        };
-
+        const updatedData = { ...data, board: currentBoard._id };
         const response = await updateCard(id, updatedData);
         dispatch(updateCardAction({ id, changes: updatedData }));
         notify.success('Card updated successfully!', 'cards/update');
