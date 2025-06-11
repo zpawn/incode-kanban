@@ -1,8 +1,8 @@
 import { useCallback } from 'react';
 import { AxiosError } from 'axios';
 import { useAppDispatch, useAppSelector } from '@/store';
-import { getCardsByBoard, createCard } from './cards.service';
-import { setCards, clearCards, addCard } from './cards.slice';
+import { getCardsByBoard, createCard, deleteCard } from './cards.service';
+import { setCards, clearCards, addCard, removeCard } from './cards.slice';
 import { setError } from '@/features/error';
 import type { Card, CreateCardDto } from './types';
 
@@ -47,9 +47,27 @@ export const useCards = () => {
     [dispatch, currentBoard]
   );
 
+  const deleteCardById = useCallback(
+    async (cardId: string): Promise<boolean> => {
+      try {
+        await deleteCard(cardId);
+        dispatch(removeCard(cardId));
+        return true;
+      } catch (error) {
+        const errorMessage =
+          error instanceof AxiosError
+            ? error?.response?.data?.errors[0]?.msg
+            : 'Failed to delete card';
+        dispatch(setError({ message: errorMessage, source: 'cards/delete' }));
+        return false;
+      }
+    },
+    [dispatch]
+  );
+
   const clearAllCards = useCallback(() => {
     dispatch(clearCards());
   }, [dispatch]);
 
-  return { cards, loadCardsByBoard, clearAllCards, createNewCard };
+  return { cards, loadCardsByBoard, clearAllCards, createNewCard, deleteCardById };
 };

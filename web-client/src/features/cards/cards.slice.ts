@@ -29,8 +29,15 @@ const { reducer, actions } = createSlice({
       state.entities[card._id] = card;
       state.ids.push(card._id);
     },
+    removeCard: (state, action: PayloadAction<string>) => {
+      const cardId = action.payload;
+      if (state.entities[cardId]) {
+        delete state.entities[cardId];
+        state.ids = state.ids.filter(id => id !== cardId);
+      }
+    },
   },
 });
 
-export const { setCards, clearCards, addCard } = actions;
+export const { setCards, clearCards, addCard, removeCard } = actions;
 export { reducer };

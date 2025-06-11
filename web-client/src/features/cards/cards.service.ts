@@ -9,4 +9,8 @@ const createCard = (data: CreateCardDto) => {
   return api.post<Card>('/cards', data);
 };
 
-export { getCardsByBoard, createCard };
+const deleteCard = (cardId: string) => {
+  return api.delete(`/cards/${cardId}`);
+};
+
+export { getCardsByBoard, createCard, deleteCard };
