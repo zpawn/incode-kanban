@@ -20,17 +20,14 @@ const LoadBoard = () => {
     <form onSubmit={onSubmit}>
       <Layout.Row>
         <Layout.Col col={9} align="middle">
-          <FormField
-            id="boardId"
-            name="boardId"
-            placeholder="Enter a board ID here"
-            required
-          />
+          <FormField id="boardId" name="boardId" placeholder="Enter a board ID here" required />
         </Layout.Col>
 
         <Layout.Col col={3}>
           <FormField>
-            <Button full type='submit'>Load</Button>
+            <Button full type="submit">
+              Load
+            </Button>
           </FormField>
         </Layout.Col>
       </Layout.Row>

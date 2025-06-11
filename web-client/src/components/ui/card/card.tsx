@@ -1,7 +1,7 @@
 import { type HTMLAttributes } from 'react';
 import { cva, type VariantProps } from 'class-variance-authority';
 import { clsx } from 'clsx';
-import { type Card as CardType }  from '@/features/cards';
+import { type Card as CardType } from '@/features/cards';
 import { IconButton } from '../button';
 import { H4, P } from '../typography';
 

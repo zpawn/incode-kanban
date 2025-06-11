@@ -10,6 +10,13 @@ export interface Card {
   updatedAt: string;
 }
 
+export interface CreateCardDto {
+  title: string;
+  description?: string;
+  status: CardStatus;
+  board: string;
+}
+
 export interface CardsState {
   entities: Record<string, Card>;
   ids: string[];

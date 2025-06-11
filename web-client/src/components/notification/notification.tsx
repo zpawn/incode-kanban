@@ -24,7 +24,10 @@ const Notification = () => {
   }
 
   return (
-    <Alert variant="danger" style={{ position: 'fixed', top: '2rem', right: '2rem', zIndex: 1000, width: '25rem' }}>
+    <Alert
+      variant="danger"
+      style={{ position: 'fixed', top: '2rem', right: '2rem', width: '25rem' }}
+    >
       {message}
     </Alert>
   );
