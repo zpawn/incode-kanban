@@ -2,14 +2,14 @@ import { Plus } from 'react-feather';
 import { Button } from '@/ui';
 import { ControlledModal } from '@/components/controlled-modal';
 import { CardForm } from '@/components/card-form';
-import { type CreateCardDto } from '@/features/cards/types';
+import { type CardDto } from '@/features/cards/types';
 import { type Card as CardType } from '@/features/cards/types';
 
 interface NewCardButtonProps {
-  onSubmit: (data: Omit<CreateCardDto, 'board'>) => Promise<CardType | void>;
+  onSubmit: (data: Omit<CardDto, 'board'>) => Promise<CardType | void>;
 }
 
-const NewCardButton = ({ onSubmit }: NewCardButtonProps) => {
+const NewCard = ({ onSubmit }: NewCardButtonProps) => {
   return (
     <ControlledModal
       title="Add Card"
@@ -26,4 +26,4 @@ const NewCardButton = ({ onSubmit }: NewCardButtonProps) => {
   )
 };
 
-export { NewCardButton };
+export { NewCard };

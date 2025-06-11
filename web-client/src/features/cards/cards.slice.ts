@@ -1,5 +1,5 @@
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
-import type { Card, CardsState } from './types';
+import type { Card, CardsState, CardDto } from './types';
 
 const initialState: CardsState = {
   entities: {},
@@ -29,6 +29,13 @@ const { reducer, actions } = createSlice({
       state.entities[card._id] = card;
       state.ids.push(card._id);
     },
+    updateCard: (state, action: PayloadAction<{ id: string; changes: CardDto }>) => {
+      const { id, changes } = action.payload;
+      const existingCard = state.entities[id];
+      if (existingCard) {
+        state.entities[id] = { ...existingCard, ...changes };
+      }
+    },
     removeCard: (state, action: PayloadAction<string>) => {
       const cardId = action.payload;
       if (state.entities[cardId]) {
@@ -39,5 +46,5 @@ const { reducer, actions } = createSlice({
   },
 });
 
-export const { setCards, clearCards, addCard, removeCard } = actions;
+export const { setCards, clearCards, addCard, removeCard, updateCard } = actions;
 export { reducer };

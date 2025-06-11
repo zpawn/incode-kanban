@@ -1,10 +1,10 @@
 import { useCallback } from 'react';
 import { AxiosError } from 'axios';
 import { useAppDispatch, useAppSelector } from '@/store';
-import { getCardsByBoard, createCard, deleteCard } from './cards.service';
-import { setCards, clearCards, addCard, removeCard } from './cards.slice';
+import { getCardsByBoard, createCard, deleteCard, updateCard } from './cards.service';
+import { setCards, clearCards, addCard, removeCard, updateCard as updateCardAction } from './cards.slice';
 import { useNotification } from '@/features/notify';
-import type { Card, CreateCardDto } from './types';
+import type { Card, CardDto } from './types';
 
 export const useCards = () => {
   const dispatch = useAppDispatch();
@@ -28,7 +28,7 @@ export const useCards = () => {
   );
 
   const createNewCard = useCallback(
-    async (data: Omit<CreateCardDto, 'board'>): Promise<Card | void> => {
+    async (data: Omit<CardDto, 'board'>): Promise<Card | void> => {
       try {
         if (!currentBoard?._id) {
           notify.danger('Board not found', 'cards/create');
@@ -48,6 +48,37 @@ export const useCards = () => {
       }
     },
     [dispatch, currentBoard, notify]
+  );
+
+  const updateExistingCard = useCallback(
+    async (id: string, data: Omit<CardDto, 'board'>): Promise<Card | void> => {
+      try {
+        if (!currentBoard?._id) {
+          notify.danger('Board not found', 'cards/create');
+          return;
+        }
+
+        const updatedData = {
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+          // @ts-ignore
+          status: cards.entities[id]?.status,
+          ...data,
+          board: currentBoard._id,
+        };
+
+        const response = await updateCard(id, updatedData);
+        dispatch(updateCardAction({ id, changes: updatedData }));
+        notify.success('Card updated successfully!', 'cards/update');
+        return response.data;
+      } catch (error) {
+        const errorMessage =
+          error instanceof AxiosError
+            ? error?.response?.data?.errors[0]?.msg || 'Failed to update card'
+            : 'Failed to update card';
+        notify.danger(errorMessage, 'cards/update');
+      }
+    },
+    [dispatch, notify, currentBoard]
   );
 
   const deleteCardById = useCallback(
@@ -73,5 +104,12 @@ export const useCards = () => {
     dispatch(clearCards());
   }, [dispatch]);
 
-  return { cards, loadCardsByBoard, clearAllCards, createNewCard, deleteCardById };
+  return {
+    cards,
+    loadCardsByBoard,
+    clearAllCards,
+    createNewCard,
+    deleteCardById,
+    updateCard: updateExistingCard,
+  };
 };

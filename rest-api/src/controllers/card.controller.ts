@@ -68,24 +68,23 @@ export const updateCard = async (req: Request, res: Response) => {
       return;
     }
 
-    const { title, description, status } = req.body;
-    const updates: any = {};
-
-    if (title !== undefined) updates.title = title;
-
-    if (description !== undefined) updates.description = description;
-
-    if (status) updates.status = status;
-
-    const card = await Card.findByIdAndUpdate(req.params.id, updates, {
-      new: true,
-      runValidators: true,
-    });
+    const card = await Card.findById(req.params.id);
 
     if (!card) {
       res.status(404).json({ message: "Card not found" });
       return;
     }
+
+    const { title, description, status } = req.body;
+    card.status = status || card.status;
+
+    if (title !== undefined) card.title = title;
+
+    if (description !== undefined) card.description = description;
+
+    if (status) card.status = status;
+
+    await card.save();
 
     res.json(card);
   } catch (error) {

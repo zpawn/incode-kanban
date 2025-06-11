@@ -10,7 +10,7 @@ export interface Card {
   updatedAt: string;
 }
 
-export interface CreateCardDto {
+export interface CardDto {
   title: string;
   description?: string;
   status: CardStatus;

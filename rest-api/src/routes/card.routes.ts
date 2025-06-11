@@ -22,7 +22,7 @@ router.post("/", validateCard, createCard);
 router.get("/", query("boardId").isMongoId().withMessage("Invalid board ID"), getCardsByBoard);
 
 router.get("/:id", param("id").isMongoId().withMessage("Invalid card ID"), getCard);
-router.put("/:id",
+router.patch("/:id",
   [param("id").isMongoId().withMessage("Invalid card ID"), ...validateCard],
   updateCard,
 );

@@ -19,13 +19,13 @@ const ControlledModal = ({ children, title, content }: ControlledModalProps) => 
 
   return (
     <>
-      {children({ onOpen, onClose })}
       <Modal
         isOpen={isOpen}
-        onClose={() => setIsOpen(false)}
+        onClose={onClose}
         title={title}
         children={content({ onOpen, onClose })}
       />
+      {children({ onOpen, onClose })}
     </>
   );
 };
