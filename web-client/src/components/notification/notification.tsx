@@ -1,11 +1,11 @@
 import { useState, useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '@/store';
-import { selectError, clearError } from '@/features/error';
+import { clearNotification } from '@/features/notify';
 import { Alert } from '@/components/ui/alert';
 
 const Notification = () => {
   const dispatch = useAppDispatch();
-  const { message, source } = useAppSelector(selectError);
+  const { message, source, type } = useAppSelector((state) => state.notify);
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
@@ -13,11 +13,11 @@ const Notification = () => {
       setIsVisible(true);
       const timer = setTimeout(() => {
         setIsVisible(false);
-        dispatch(clearError());
+        dispatch(clearNotification());
       }, 3000);
       return () => clearTimeout(timer);
     }
-  }, [message, source, dispatch]);
+  }, [message, source, type, dispatch]);
 
   if (!isVisible || !message) {
     return null;
@@ -25,7 +25,7 @@ const Notification = () => {
 
   return (
     <Alert
-      variant="danger"
+      variant={type}
       style={{ position: 'fixed', top: '2rem', right: '2rem', width: '25rem' }}
     >
       {message}
