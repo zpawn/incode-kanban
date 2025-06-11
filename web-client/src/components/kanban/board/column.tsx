@@ -1,4 +1,4 @@
-import { type HTMLAttributes } from 'react';
+import { Children, type HTMLAttributes } from 'react';
 import { cva, type VariantProps } from 'class-variance-authority';
 import { clsx } from 'clsx';
 import { P } from '@/ui';
@@ -21,7 +21,7 @@ const Column = ({ children, title, className, ...props }: ColumnProps) => {
       <P align="center">{title}</P>
 
       <div className={clsx(columnVariants({ className }))} {...props}>
-        {children ? children : <P align="center">No cards</P>}
+        {Children.count(children) > 0 ? children : <P align="center">No cards</P>}
       </div>
     </>
   );

@@ -6,4 +6,5 @@ export interface Board {
 export interface BoardState {
   currentBoard: Board | null;
   loading: boolean;
+  boards: Board[];
 }

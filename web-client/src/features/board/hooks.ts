@@ -1,7 +1,7 @@
 import { useCallback } from 'react';
 import { useAppDispatch } from '@/store';
-import { getBoard } from './board.service';
-import { setBoard, setLoading } from './board.slice';
+import { getBoard, getBoards } from './board.service';
+import { setBoard, setLoading, setBoards } from './board.slice';
 import { useNotification } from '@/features/notify';
 import { useCards } from '@/features/cards';
 
@@ -37,4 +37,24 @@ export const useLoadBoard = () => {
   );
 
   return loadBoard;
+};
+
+export const useLoadBoards = () => {
+  const dispatch = useAppDispatch();
+
+  const loadBoards = useCallback(async () => {
+    try {
+      dispatch(setLoading(true));
+      const response = await getBoards();
+      dispatch(setBoards(response.data));
+      return { success: true, data: response.data };
+    } catch (error) {
+      const errorMessage = error instanceof Error ? error.message : 'Failed to load boards';
+      return { success: false, error: errorMessage };
+    } finally {
+      dispatch(setLoading(false));
+    }
+  }, [dispatch]);
+
+  return loadBoards;
 };

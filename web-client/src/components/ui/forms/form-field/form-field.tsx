@@ -1,4 +1,4 @@
-import { type InputHTMLAttributes } from 'react';
+import { type InputHTMLAttributes, type Ref } from 'react';
 import { cva, type VariantProps } from 'class-variance-authority';
 import { clsx } from 'clsx';
 import { Label } from '../label';
@@ -10,11 +10,12 @@ const formFieldVariants = cva('form-group', {
 });
 
 interface FormFieldProps
-  extends Omit<InputHTMLAttributes<HTMLInputElement>, 'size'>,
+  extends InputHTMLAttributes<HTMLInputElement>,
     VariantProps<typeof formFieldVariants> {
   label?: string;
   required?: boolean;
   className?: string;
+  ref?: Ref<HTMLInputElement>;
 }
 
 const FormField = ({
